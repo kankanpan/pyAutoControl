@@ -13,6 +13,8 @@ def findTargetCv(img_path, good_match_rate=0.30, min_match=10):
     ss = pilToCv(pyautogui.screenshot())
     image = cv2.imread( './img/' + img_path)
 
+    #image = cv2.resize(image, dsize=None, fx=2, fx=2)
+
     # result = cv2.matchTemplate(ss, image, cv2.TM_CCORR_NORMED)
     # minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(result)
 
@@ -35,14 +37,15 @@ def findTargetCv(img_path, good_match_rate=0.30, min_match=10):
     dst_pts = np.float32([kp_01[m.queryIdx].pt for m in good])
     Mx, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC)
 
-    height = image.shape[0]
-    width = image.shape[1]
+    mutch_image_src = cv2.drawMatches(ss, kp_01, image, kp_02, matches[:10], None, flags=2)
+
+    height = mutch_image_src.shape[0]
+    width = mutch_image_src.shape[1]
     top_left = (int(Mx[0][2] +0.5), int(Mx[1][2] +0.5)); #tx,ty
     bottom_right = (top_left[0] + width, top_left[1] + height)
 
-    result = ss
-    cv2.rectangle(result,top_left, bottom_right, (255, 0, 0), 10)
-    cv2.imshow('image', result)
+    cv2.rectangle(mutch_image_src,top_left, bottom_right, (255, 0, 0), 10)
+    cv2.imshow('image', mutch_image_src)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
