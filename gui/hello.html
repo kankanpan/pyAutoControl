@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello, World!</title>
+
+    <!-- ell.jsインクルード -->
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript">
+
+        // eel.expose(XXX)でこの関数をpythonから呼べるようにします。
+        eel.expose(say_hello_js);
+        function say_hello_js(x) {
+            console.log("Hello from " + x);
+        }
+
+        // pythonで宣言した関数をjsで呼びます。
+        eel.say_hello_py("Javascript World!");
+
+    </script>
+</head>
+
+<body>
+    Hello, World!
+</body>
+</html>
