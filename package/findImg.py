@@ -51,6 +51,12 @@ def findTargetCv(img_path, good_match_rate=0.30, min_match=10):
 
     return  Mx, np.int32(mask)
 
+def judgeColor(location):
+    ss = pilToCv(pyautogui.screenshot( region=(location[0]-4, location[1]-4, location[0]+4, location[1]+4 )))
+    imgBoxHsv = cv2.cvtColor(ss,cv2.COLOR_BGR2HSV)
+    v = imgBoxHsv.T[2].flatten().mean()
+    print("Value: %.2f" % (v))
+    return v < 160
 
 def judgeMatching(num):
     if 0.99 < num:
@@ -67,3 +73,5 @@ def pilToCv(image):
     elif new_image.shape[2] == 4:
         new_image = cv2.cvtColor(new_image, cv2.COLOR_RGBA2BGRA)
     return new_image
+
+print(judgeColor([4,4]))

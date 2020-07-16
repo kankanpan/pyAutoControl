@@ -20,5 +20,5 @@ def findByKeyword( keyword ):
     win32gui.EnumWindows( forground, keyword )
     
     forWin = win32gui.GetForegroundWindow()
-    ect = win32gui.GetWindowRect(hwnd)
+    ect = win32gui.GetWindowRect(forWin)
     return ect
