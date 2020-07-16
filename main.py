@@ -4,13 +4,8 @@ import eel
 from package import *
 
 def action():
-    findWindow.findByKeyword()
-    guiAction.click()
-    while True:
-        if findImg.judgeColor():
-            break
-        eel.sleep(2)
+    findImg.findTargetCv('test.png')
     
 
 #guiInit.init( action )
-
+action()

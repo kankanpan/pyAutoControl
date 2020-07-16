@@ -9,11 +9,12 @@ def findTarget(img_path):
 
     return location
 
-def findTargetCv(img_path, good_match_rate=0.30, min_match=10):
+def findTargetCv(img_path, good_match_rate=0.3, min_match=10):
     ss = pilToCv(pyautogui.screenshot())
     image = cv2.imread( './img/' + img_path)
 
-    #image = cv2.resize(image, dsize=None, fx=2, fx=2)
+    #if image.shape[0] < 300 or image.shape[1] < 300:
+    #    image = cv2.resize(image, dsize=None, fx=2, fy=2)
 
     # result = cv2.matchTemplate(ss, image, cv2.TM_CCORR_NORMED)
     # minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(result)
@@ -33,26 +34,25 @@ def findTargetCv(img_path, good_match_rate=0.30, min_match=10):
     if len(good) < min_match:
         return False
 
-    src_pts = np.float32([kp_02[m.trainIdx].pt for m in good])
-    dst_pts = np.float32([kp_01[m.queryIdx].pt for m in good])
-    Mx, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC)
+    src_pts = np.float32([kp_02[g.trainIdx].pt for g in good[:2]])
+    dst_pts = np.float32([kp_01[g.queryIdx].pt for g in good[:2]])
 
-    mutch_image_src = cv2.drawMatches(ss, kp_01, image, kp_02, matches[:10], None, flags=2)
+    s = (dst_pts[0][0] - dst_pts[1][0])/(src_pts[0][0] - src_pts[1][0])
+    x = dst_pts[0][0] - src_pts[0][0] *s
+    y = dst_pts[0][1] - src_pts[0][1] *s
 
-    height = mutch_image_src.shape[0]
-    width = mutch_image_src.shape[1]
-    top_left = (int(Mx[0][2] +0.5), int(Mx[1][2] +0.5)); #tx,ty
-    bottom_right = (top_left[0] + width, top_left[1] + height)
+    print(x,y,s)
 
-    cv2.rectangle(mutch_image_src,top_left, bottom_right, (255, 0, 0), 10)
+    mutch_image_src = cv2.drawMatches(ss, kp_01, image, kp_02, good[:4], None, flags=2)
+
     cv2.imshow('image', mutch_image_src)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    return  Mx, np.int32(mask)
+    return [x, y, s]
 
 def judgeColor(location):
-    ss = pilToCv(pyautogui.screenshot( region=(location[0]-4, location[1]-4, location[0]+4, location[1]+4 )))
+    ss = pilToCv(pyautogui.screenshot( region=(location[0]-4, location[1]-4, 8, 8 )))
     imgBoxHsv = cv2.cvtColor(ss,cv2.COLOR_BGR2HSV)
     v = imgBoxHsv.T[2].flatten().mean()
     print("Value: %.2f" % (v))
@@ -73,5 +73,3 @@ def pilToCv(image):
     elif new_image.shape[2] == 4:
         new_image = cv2.cvtColor(new_image, cv2.COLOR_RGBA2BGRA)
     return new_image
-
-print(judgeColor([4,4]))
