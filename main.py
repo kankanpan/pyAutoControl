@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from findImg import *
-from guiAction import *
+from package import *
 
-findTargetCv("test.png")
+def action():
+    findWindow.findByKeyword()
+    guiAction.click()
+    
 
-print("Finish!")
+#guiInit.init( action )
+

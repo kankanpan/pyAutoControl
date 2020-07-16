@@ -1,25 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hello, World!</title>
-
-    <!-- ell.jsインクルード -->
+    <title>PythonAutoController</title>
+    <link rel="icon" href="./img/kumi.ico">
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
     <script type="text/javascript" src="/eel.js"></script>
-    <script type="text/javascript">
-
-        // eel.expose(XXX)でこの関数をpythonから呼べるようにします。
-        eel.expose(say_hello_js);
-        function say_hello_js(x) {
-            console.log("Hello from " + x);
-        }
-
-        // pythonで宣言した関数をjsで呼びます。
-        eel.say_hello_py("Javascript World!");
-
-    </script>
 </head>
-
 <body>
-    Hello, World!
+    <main>
+        <span><button type="button" onclick="eel.statusCheckPy()">Check</button></span>
+        <span><button type="button" onclick="eel.doActionPy()">Action</button></span>
+        <span><button type="button" onclick="eel.forceStopPy()">Stop</button></span>
+    </main>
 </body>
 </html>

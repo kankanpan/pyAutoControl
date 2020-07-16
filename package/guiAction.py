@@ -7,5 +7,9 @@ def writeAndEnter(location, text):
     pyautogui.keyUp('ctrl')
     pyautogui.press('backspace')
     pyautogui.write(text)
+    pyautogui.press('enter')
+    return
 
+def click(location):
+    pyautogui.click(x=location[0], y=location[1])
     return
