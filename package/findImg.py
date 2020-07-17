@@ -74,8 +74,9 @@ def pilToCv(image):
         new_image = cv2.cvtColor(new_image, cv2.COLOR_RGBA2BGRA)
     return new_image
 
-def findBlackRect(img_path):
-    image = cv2.imread( './img/' + img_path, cv2.IMREAD_GRAYSCALE)
+def findBlackRect(rect):
+    ss = pilToCv(pyautogui.screenshot(rect[0], rect[1], rect[2]-rect[0], rect[3]-rect[1]))
+    # image = cv2.imread( './img/' + img_path, cv2.IMREAD_GRAYSCALE)
     (thresh, im_bw) = cv2.threshold(image,0,255,cv2.THRESH_BINARY)
 
     contours, hierarchy = cv2.findContours(im_bw,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
@@ -91,5 +92,4 @@ def findBlackRect(img_path):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-
-findBlackRect("test.png")
+    return [x,y,x+w,y+h]
