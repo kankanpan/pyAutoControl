@@ -43,11 +43,11 @@ def findTargetCv(img_path, good_match_rate=0.3, min_match=10):
 
     print(x,y,s)
 
-    mutch_image_src = cv2.drawMatches(ss, kp_01, image, kp_02, good[:4], None, flags=2)
+    # mutch_image_src = cv2.drawMatches(ss, kp_01, image, kp_02, good[:4], None, flags=2)
 
-    cv2.imshow('image', mutch_image_src)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow('image', mutch_image_src)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
     return [x, y, s]
 
@@ -75,8 +75,9 @@ def pilToCv(image):
     return new_image
 
 def findBlackRect(rect):
-    ss = pilToCv(pyautogui.screenshot(rect[0], rect[1], rect[2]-rect[0], rect[3]-rect[1]))
+    ss = pilToCv(pyautogui.screenshot(region=(rect[0], rect[1], rect[2]-rect[0], rect[3]-rect[1])))
     # image = cv2.imread( './img/' + img_path, cv2.IMREAD_GRAYSCALE)
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     (thresh, im_bw) = cv2.threshold(image,0,255,cv2.THRESH_BINARY)
 
     contours, hierarchy = cv2.findContours(im_bw,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
@@ -86,10 +87,25 @@ def findBlackRect(rect):
         if area > 200000 and area < 1000000:
             x,y,w,h = cv2.boundingRect(cnt)
             print(area)
-            image = cv2.rectangle(image,(x,y),(x+w,y+h),(120,120,120),4)
+            # image = cv2.rectangle(image,(x,y),(x+w,y+h),(120,120,120),4)
 
-    cv2.imshow('image', image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow('image', image)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
     return [x,y,x+w,y+h]
+
+def SS():
+    return ss = pilToCv(pyautogui.screenshot())
+
+def findDef(ss1):
+    ss2 = pilToCv(pyautogui.screenshot())
+    ss1 = cv2.cvtColor(ss1, cv2.COLOR_RGB2GRAY)
+    ss2 = cv2.cvtColor(ss2, cv2.COLOR_RGB2GRAY)
+    fgbg = cv2.bgsegm.createBackgroundSubtractorMOG()
+    fgmask = fgbg.apply(ss1)
+    fgmask = fgbg.apply(ss2)
+
+    cv2.imshow('frame',fgmask)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
