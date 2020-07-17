@@ -73,3 +73,23 @@ def pilToCv(image):
     elif new_image.shape[2] == 4:
         new_image = cv2.cvtColor(new_image, cv2.COLOR_RGBA2BGRA)
     return new_image
+
+def findBlackRect(img_path):
+    image = cv2.imread( './img/' + img_path, cv2.IMREAD_GRAYSCALE)
+    (thresh, im_bw) = cv2.threshold(image,0,255,cv2.THRESH_BINARY)
+
+    contours, hierarchy = cv2.findContours(im_bw,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
+
+    for cnt in contours:
+        area = cv2.contourArea(cnt)
+        if area > 200000 and area < 1000000:
+            x,y,w,h = cv2.boundingRect(cnt)
+            print(area)
+            image = cv2.rectangle(image,(x,y),(x+w,y+h),(120,120,120),4)
+
+    cv2.imshow('image', image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+findBlackRect("test.png")

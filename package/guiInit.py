@@ -16,6 +16,6 @@ def init(action):
     def forceStopPy():
         sys.exit()
 
-    eel.start('hello.html', size=(800, 300))
+    eel.start('hello.html', size=(690, 250))
 
     return
