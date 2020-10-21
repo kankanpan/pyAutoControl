@@ -1,7 +1,9 @@
 <template>
-<div class="home">
-  <MainButton :click="testClick" text="Welcome to Your Vue.js App" />
-</div>
+<main class="home">
+  <MainButton :click="testClick" text="Check" />
+  <MainButton :click="testClick" text="Action" />
+  <MainButton :click="testClick" text="Stop" />
+</main>
 </template>
 
 <script>
@@ -21,3 +23,6 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+</style>
