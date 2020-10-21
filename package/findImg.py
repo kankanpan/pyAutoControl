@@ -74,17 +74,17 @@ def pilToCv(image):
         new_image = cv2.cvtColor(new_image, cv2.COLOR_RGBA2BGRA)
     return new_image
 
-def findBlackRect(rect):
+def findBlackRect(rect, s=1):
     ss = pilToCv(pyautogui.screenshot(region=(rect[0], rect[1], rect[2]-rect[0], rect[3]-rect[1])))
     # image = cv2.imread( './img/' + img_path, cv2.IMREAD_GRAYSCALE)
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+    image = cv2.cvtColor(ss, cv2.COLOR_RGB2GRAY)
     (thresh, im_bw) = cv2.threshold(image,0,255,cv2.THRESH_BINARY)
 
     contours, hierarchy = cv2.findContours(im_bw,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        if area > 200000 and area < 1000000:
+        if area > 200000*s and area < 1000000*s:
             x,y,w,h = cv2.boundingRect(cnt)
             print(area)
             # image = cv2.rectangle(image,(x,y),(x+w,y+h),(120,120,120),4)
@@ -96,7 +96,7 @@ def findBlackRect(rect):
     return [x,y,x+w,y+h]
 
 def SS():
-    return ss = pilToCv(pyautogui.screenshot())
+    return pilToCv(pyautogui.screenshot())
 
 def findDef(ss1):
     ss2 = pilToCv(pyautogui.screenshot())

@@ -1,0 +1,10 @@
+energy to 600
+position to au
+
+
+stepTime = frmas/15
+totalStep = width * 1000 / size + 1000/step
+
+totalTime = stepTime*totalStep + 3 s
+
+trans = 100 s

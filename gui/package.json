@@ -1,0 +1,62 @@
+{
+  "name": "gui",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "e-build": "vue-cli-service electron:build",
+    "e-serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
+    "start": "vue-cli-service serve --open"
+  },
+  "main": "background.js",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "chart.js": "^2.9.3",
+    "core-js": "^3.6.5",
+    "material-icons": "^0.3.1",
+    "vee-validate": "^4.0.0-beta.8",
+    "vue": "^3.0.0",
+    "vue-axios": "^3.1.1",
+    "vue-chartjs": "^3.5.1",
+    "vue-router": "^4.0.0-0",
+    "vue-socket.io": "^3.0.10",
+    "vuedraggable": "^2.24.1",
+    "vuesax": "^4.0.1-alpha.25"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.5.8",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "^4.5.7",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-eslint": "^10.1.0",
+    "electron": "^9.0.0",
+    "electron-devtools-installer": "^3.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0-0",
+    "vue-cli-plugin-electron-builder": "~2.0.0-rc.4"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

@@ -5,7 +5,6 @@ from package import *
 
 def action():
     findImg.findTargetCv('test.png')
-    
 
-#guiInit.init( action )
-action()
+guiInit.init( action )
+#action()
