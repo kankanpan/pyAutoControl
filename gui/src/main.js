@@ -1,8 +1,31 @@
-import { createApp } from 'vue'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
 
-import App from './App.vue'
-import router from './router'
+if (require('electron-squirrel-startup')) {
+  app.quit();
+}
 
-createApp(App).use(router, VueAxios, axios).mount('#app')
+const createWindow = () => {
+  const mainWindow = new BrowserWindow({
+    width: 1200,
+    height: 800,
+  });
+
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+  mainWindow.webContents.openDevTools();
+};
+
+app.on('ready', createWindow);
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
+});

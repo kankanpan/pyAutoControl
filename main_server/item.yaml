@@ -1,0 +1,13 @@
+test: !!python/object:api.schemas.ItemCreate
+  __dict__:
+    description: null
+    name: test
+    window: python auto controler
+    x: 41.0
+    y: 630.0
+  __fields_set__: !!set
+    name: null
+    window: null
+    x: null
+    y: null
+  __private_attribute_values__: {}
